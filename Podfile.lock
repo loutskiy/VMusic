@@ -1,0 +1,60 @@
+PODS:
+  - Alamofire (4.7.2)
+  - AlamofireObjectMapper (5.1.0):
+    - Alamofire (~> 4.1)
+    - ObjectMapper (~> 3.3)
+  - ICSPullToRefresh (0.6)
+  - MaterialActivityIndicator (0.0.3)
+  - MBProgressHUD (1.0.0)
+  - ObjectMapper (3.3.0)
+  - "ObjectMapper+Realm (0.6)":
+    - ObjectMapper
+    - RealmSwift
+  - Realm (3.7.4):
+    - Realm/Headers (= 3.7.4)
+  - Realm/Headers (3.7.4)
+  - RealmSwift (3.7.4):
+    - Realm (= 3.7.4)
+  - SDWebImage (4.4.1):
+    - SDWebImage/Core (= 4.4.1)
+  - SDWebImage/Core (4.4.1)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.5)
+  - AlamofireObjectMapper
+  - ICSPullToRefresh (~> 0.6)
+  - MaterialActivityIndicator
+  - MBProgressHUD (~> 1.0.0)
+  - ObjectMapper (~> 3.0)
+  - "ObjectMapper+Realm"
+  - RealmSwift
+  - SDWebImage (~> 4.0)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - AlamofireObjectMapper
+    - ICSPullToRefresh
+    - MaterialActivityIndicator
+    - MBProgressHUD
+    - ObjectMapper
+    - "ObjectMapper+Realm"
+    - Realm
+    - RealmSwift
+    - SDWebImage
+
+SPEC CHECKSUMS:
+  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  AlamofireObjectMapper: 3395e698901d8b0e6f48b7d0c43bd47875325102
+  ICSPullToRefresh: a64f102c6558cc34270ea60e99df7c91d1f3d2c0
+  MaterialActivityIndicator: f1750c3c4d843b5472e48c69aa23b7673a732977
+  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
+  "ObjectMapper+Realm": 4cf44ed3202a73f08594e21e13eb3f8aa9b5a664
+  Realm: a469bb59e33f9926102ccaea4349822c53b9117e
+  RealmSwift: a45861b21c180f5cf0f122144b9759fa8dde3e9e
+  SDWebImage: 47e9b5b925cbce75946c23f0c42dd19464189af4
+
+PODFILE CHECKSUM: 06ed2bfb317ef03a4b33b503176e4cd246c33022
+
+COCOAPODS: 1.5.3
