@@ -42,11 +42,12 @@ class VMCache {
     
     func deleteSong (_ song : VMSongModel) {
         try! realm.write {
-            realm.delete(song)
+            realm.delete(realm.objects(VMSongModel.self).filter("id == \(song.id)"))
         }
         
         let file = myDocuments.appendingPathComponent("\(song.id)_\(song.ownerId).mp3")
         try? fileManager.removeItem(at: file)
+        
     }
     
     func clearAll () {

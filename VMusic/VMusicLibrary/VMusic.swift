@@ -80,8 +80,25 @@ class VMusic {
         }
     }
     
+    func getTrackArtwork (artist: String, track: String,success: @escaping (_ imagePath: String) -> Void) {
+        VMServerManager.sendRequestToLastFM(artist: artist, track: track, success: { (path) in
+            success(path)
+        }) { (error) in
+            print(error)
+        }
+    }
+    
+    func getUserInfo (_ user: @escaping (_ user: VMUserModel) -> Void) {
+        VMServerManager.sendRequestToVk(success: { (userModel) in
+            user(userModel)
+        }) { (error) in
+            print(error)
+        }
+    }
+    
     func deauth () {
         VMAccessToken().setToken("")
+        VMCache.shared.clearAll()
         delegate?.sendStateFromVMusic(.tokenExp)
     }
     

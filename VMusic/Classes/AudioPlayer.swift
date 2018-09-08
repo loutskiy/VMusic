@@ -25,8 +25,11 @@ class AudioPlayer {
     static var index = 0
     fileprivate var player: AVPlayer!
     var currentAudio: VMSongModel!
+    var isShuffleEnabled = false
+    var isRepeatEnabled = false
     
-    fileprivate var currentPlayList = [VMSongModel]()
+    fileprivate var currentPlaylist = [VMSongModel]()
+    fileprivate var reservePlaylist = [VMSongModel]()
     fileprivate var timeObserber: AnyObject?
     
     //MARK: - Time Observer
@@ -56,7 +59,7 @@ class AudioPlayer {
             killTimeObserver()
         }
         
-        currentAudio = currentPlayList[AudioPlayer.index]
+        currentAudio = currentPlaylist[AudioPlayer.index]
         let header = ["User-Agent":VMServerManager.userAgentForDatmusic]
         let asset = AVURLAsset(url: url, options: ["AVURLAssetHTTPHeaderFieldsKey":header])
         let playerItem = AVPlayerItem(asset: asset)
@@ -95,28 +98,32 @@ class AudioPlayer {
         var nextIndex = AudioPlayer.index - 1
         
         if nextIndex < 0 {
-            nextIndex = currentPlayList.count - 1
+            nextIndex = currentPlaylist.count - 1
         }
         
-        currentAudio = currentPlayList[nextIndex]
+        currentAudio = currentPlaylist[nextIndex]
         AudioPlayer.index = nextIndex
         
         NotificationCenter.default.post(name: .previousTrack, object: nil)
-        delegate?.playerWillPlayPreviousAudio(currentPlayList[nextIndex])
+        delegate?.playerWillPlayPreviousAudio(currentPlaylist[nextIndex])
     }
     
     func next() {
         var nextIndex = AudioPlayer.index + 1
         
-        if nextIndex > (currentPlayList.count - 1) {
-            nextIndex = 0
+        if nextIndex > (currentPlaylist.count - 1) {
+            if isRepeatEnabled {
+                nextIndex = 0
+            } else {
+                kill()
+            }
         }
         
-        currentAudio = currentPlayList[nextIndex]
+        currentAudio = currentPlaylist[nextIndex]
         AudioPlayer.index = nextIndex
 
         NotificationCenter.default.post(name: .nextTrack, object: nil)
-        delegate?.playerWillPlayNextAudio(currentPlayList[nextIndex])
+        delegate?.playerWillPlayNextAudio(currentPlaylist[nextIndex])
     }
     
     func pause() {
@@ -138,10 +145,19 @@ class AudioPlayer {
     }
     
     func setPlayList(_ playList: [VMSongModel]) {
-        currentPlayList = playList
+        currentPlaylist = playList
     }
     
     func seekToTime(_ time: CMTime) {
         player.seek(to: time)
+    }
+    
+    func shuffle () {
+        if isShuffleEnabled {
+            self.reservePlaylist = self.currentPlaylist
+            self.currentPlaylist = self.currentPlaylist.shuffled()
+        } else {
+            self.currentPlaylist = self.reservePlaylist
+        }
     }
 }

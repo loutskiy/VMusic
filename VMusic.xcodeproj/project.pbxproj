@@ -30,6 +30,8 @@
 		A79A1612212D9BBD002BD735 /* VMApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79A1611212D9BBD002BD735 /* VMApi.swift */; };
 		A79A1614212D9E3F002BD735 /* VMAccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79A1613212D9E3F002BD735 /* VMAccessToken.swift */; };
 		A79A1616212DC295002BD735 /* VMDatmusicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79A1615212DC295002BD735 /* VMDatmusicModel.swift */; };
+		A7B835572132CECB004ACFF1 /* VMImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B835562132CECB004ACFF1 /* VMImageModel.swift */; };
+		A7B8355921392A08004ACFF1 /* Collection+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B8355821392A08004ACFF1 /* Collection+extensions.swift */; };
 		A7C854FF212EC0D10066A220 /* MusicListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C854FD212EC0D10066A220 /* MusicListCell.swift */; };
 		A7C85500212EC0D10066A220 /* MusicListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7C854FE212EC0D10066A220 /* MusicListCell.xib */; };
 		A7C85502212EC9620066A220 /* ConstantsViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C85501212EC9620066A220 /* ConstantsViews.swift */; };
@@ -117,6 +119,8 @@
 		A79A1611212D9BBD002BD735 /* VMApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VMApi.swift; sourceTree = "<group>"; };
 		A79A1613212D9E3F002BD735 /* VMAccessToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VMAccessToken.swift; sourceTree = "<group>"; };
 		A79A1615212DC295002BD735 /* VMDatmusicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VMDatmusicModel.swift; sourceTree = "<group>"; };
+		A7B835562132CECB004ACFF1 /* VMImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VMImageModel.swift; sourceTree = "<group>"; };
+		A7B8355821392A08004ACFF1 /* Collection+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+extensions.swift"; sourceTree = "<group>"; };
 		A7C854FD212EC0D10066A220 /* MusicListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListCell.swift; sourceTree = "<group>"; };
 		A7C854FE212EC0D10066A220 /* MusicListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MusicListCell.xib; sourceTree = "<group>"; };
 		A7C85501212EC9620066A220 /* ConstantsViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantsViews.swift; sourceTree = "<group>"; };
@@ -290,6 +294,7 @@
 				A7C8553B212F35360066A220 /* NotificationName+extensions.swift */,
 				A75F8FA521301D6B00E2DAFB /* Int+extensions.swift */,
 				A75F8FA821303C3700E2DAFB /* Array+extensions.swift */,
+				A7B8355821392A08004ACFF1 /* Collection+extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -315,6 +320,7 @@
 				A75F8FA121300AA800E2DAFB /* VMAlbumModel.swift */,
 				A75F8FAE213049B000E2DAFB /* VMUserModel.swift */,
 				A75F8FB22131AE3B00E2DAFB /* VMErrorModel.swift */,
+				A7B835562132CECB004ACFF1 /* VMImageModel.swift */,
 			);
 			path = VMModels;
 			sourceTree = "<group>";
@@ -430,6 +436,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/UICircularProgressRing/UICircularProgressRing.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -443,6 +450,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICircularProgressRing.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -503,12 +511,14 @@
 				A7C85506212ECA580066A220 /* VMDelegate.swift in Sources */,
 				A7C85521212EE1030066A220 /* MusicPlayerVC.swift in Sources */,
 				A7C8552F212EFA320066A220 /* UIViewController+extensions.swift in Sources */,
+				A7B8355921392A08004ACFF1 /* Collection+extensions.swift in Sources */,
 				A7C85502212EC9620066A220 /* ConstantsViews.swift in Sources */,
 				A75F8FB72131CD9B00E2DAFB /* CaptchaVC.swift in Sources */,
 				A7C8553C212F35360066A220 /* NotificationName+extensions.swift in Sources */,
 				A75F8FAD2130424000E2DAFB /* Migrations.swift in Sources */,
 				A7C85531212EFB800066A220 /* ViewManager.swift in Sources */,
 				A79A160E212D9730002BD735 /* VMusic.swift in Sources */,
+				A7B835572132CECB004ACFF1 /* VMImageModel.swift in Sources */,
 				A75F8FAF213049B000E2DAFB /* VMUserModel.swift in Sources */,
 				A75F8FA921303C3700E2DAFB /* Array+extensions.swift in Sources */,
 				A75F8FA0212FFF2900E2DAFB /* VMTrackModel.swift in Sources */,
@@ -670,10 +680,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8YBKQD6YZD;
 				INFOPLIST_FILE = VMusic/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.lwts.VMusic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "VMusic-Bridging-Header.h";
@@ -692,10 +699,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8YBKQD6YZD;
 				INFOPLIST_FILE = VMusic/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.lwts.VMusic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "VMusic-Bridging-Header.h";

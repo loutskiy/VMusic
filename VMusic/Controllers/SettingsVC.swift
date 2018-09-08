@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class SettingsVC: UITableViewController {
 
@@ -19,7 +20,10 @@ class SettingsVC: UITableViewController {
     }
     
     func loadData () {
-//        Serv
+        VMusic.shared.getUserInfo { (user) in
+            self.userImageView.sd_setImage(with: URL(string: user.photoBig), placeholderImage: nil, options: [], completed: nil)
+            self.userNameLabel.text = "\(user.firstName) \(user.secondName)"
+        }
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -34,7 +38,8 @@ class SettingsVC: UITableViewController {
                 break
             case 2:
                 UIApplication.shared.open(URL(string: "https://lwts.ru")!, options: [:], completionHandler: nil)
-                break
+            case 3:
+                UIApplication.shared.open(URL(string: "https://vk.com/privacy")!, options: [:], completionHandler: nil)
             default:
                 break
             }

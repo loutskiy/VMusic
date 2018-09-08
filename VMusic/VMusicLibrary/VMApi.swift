@@ -14,7 +14,7 @@ struct VMApiStruct {
         static let VkUrl = "https://api.vk.com/method/"
         static let DatmusicUrl = "https://api-2.datmusic.xyz/"
         static let TokenUrl = "https://audio.bigbadbird.ru/"
-        static let LastFMUrl = "http://ws.audioscrobbler.com/2.0/?format=json&method="
+        static let LastFMUrl = "http://ws.audioscrobbler.com/2.0/?format=json&api_key=859dd05988e7df407c03d6cb74e41477&method="
     }
     
     fileprivate static let VkUrl = Domains.VkUrl

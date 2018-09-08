@@ -20,8 +20,9 @@ class VMServerManager {
         params = params.merging(VMCaptcha.shared.checkForCaptchaProtection(method: .captchaDatmusic)) { (_, new) in
             new
         }
-        let headers: HTTPHeaders = ["User-Agent": userAgentForDatmusic]
+        let headers: HTTPHeaders = ["User-Agent": userAgentForDatmusic, "Referer": "https://datmusic.xyz"]
         Alamofire.request(VMApiStruct.datmusicSearch, method: .get, parameters: params, headers:headers).responseJSON { (response) in
+            print(response.result.value)
             switch response.result {
             case .success:
                 if let JSON = response.result.value as? [String:AnyObject] {
@@ -72,6 +73,22 @@ class VMServerManager {
         }
     }
     
+    static func sendRequestToVk (success: @escaping (_ user: VMUserModel) -> Void, fail: @escaping(_ error: NSError) -> Void) {
+        let parameters: Parameters = ["v": 5.64, "access_token": VMAccessToken().getToken(), "fields": "photo,photo_medium,photo_big"]
+        let headers: HTTPHeaders = ["User-Agent": userAgentForVkAPI]
+        Alamofire.request(VMApiStruct.getUser, parameters: parameters, headers: headers).responseJSON { (response) in
+            switch response.result {
+            case .success:
+                 if let JSON = response.result.value as? [String:AnyObject] {
+                    let data = Mapper<VMUserModel>().mapArray(JSONObject: JSON["response"])
+                    success(data?.first ?? VMUserModel())
+                 }
+            case .failure(let error):
+                fail(error as NSError)
+            }
+        }
+    }
+    
     static func generateToken (login: String, password: String, success:@escaping (_ token: String) -> Void, fail: @escaping (_ error: NSError ) -> Void) {
         let params: Parameters = ["login": login, "pass": password]
         Alamofire.request(VMApiStruct.getToken, method: .post, parameters: params).responseJSON { (response) in
@@ -90,10 +107,29 @@ class VMServerManager {
         }
     }
     
-//    static func sendRequestToLastFM (artist: String, track: String, success:@escaping () -> Void, fail: @escaping (_ error: NSError ) -> Void) {
-//        let params: Parameters = ["artist": artist, "track": track]
-//        Alamofire.request(VMApiStruct.getAlbumArtwork, method: .get, parameters: params).responseJSON { (<#DataResponse<Any>#>) in
-//            <#code#>
-//        }
-//    }
+    static func sendRequestToLastFM (artist: String, track: String, success:@escaping (_ path: String) -> Void, fail: @escaping (_ error: NSError ) -> Void) {
+        let params: Parameters = ["artist": artist, "track": track]
+        Alamofire.request(VMApiStruct.getAlbumArtwork, method: .get, parameters: params).responseJSON { (response) in
+            //print(response.result.value)
+            switch response.result {
+            case .success:
+                if let JSON = response.result.value as? [String:AnyObject] {
+                    if let trackObject = JSON["track"] as? [String : AnyObject ] {
+                        if let album = trackObject["album"] as? [String : AnyObject] {
+                            let data = Mapper<VMImageModel>().mapArray(JSONObject: album["image"]) ?? [VMImageModel]()
+//                            print(data)
+                            for image in data {
+                                if image.size == "extralarge" {
+                                    success(image.text)
+                                }
+                            }
+                        }
+                    }
+                }
+                break
+            case .failure(let error):
+                fail(error as NSError)
+            }
+        }
+    }
 }

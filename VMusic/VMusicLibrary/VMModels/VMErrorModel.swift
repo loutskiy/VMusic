@@ -32,5 +32,4 @@ class VMErrorModel : Object, Mappable {
         code <- map["code"]
         message <- map["message"]
     }
-    
 }

@@ -13,6 +13,8 @@ target 'VMusic' do
     	pod 'ICSPullToRefresh', '~> 0.6'
 	pod "ObjectMapper+Realm"
 	pod 'MaterialActivityIndicator'
+	pod 'UICircularProgressRing'
+
 	post_install do |installer|
     		installer.pods_project.build_configurations.each do |config|
         		config.build_settings.delete('CODE_SIGNING_ALLOWED')

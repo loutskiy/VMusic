@@ -18,6 +18,7 @@ PODS:
   - SDWebImage (4.4.1):
     - SDWebImage/Core (= 4.4.1)
   - SDWebImage/Core (4.4.1)
+  - UICircularProgressRing (3.0.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.5)
@@ -29,6 +30,7 @@ DEPENDENCIES:
   - "ObjectMapper+Realm"
   - RealmSwift
   - SDWebImage (~> 4.0)
+  - UICircularProgressRing
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -42,6 +44,7 @@ SPEC REPOS:
     - Realm
     - RealmSwift
     - SDWebImage
+    - UICircularProgressRing
 
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
@@ -54,7 +57,8 @@ SPEC CHECKSUMS:
   Realm: a469bb59e33f9926102ccaea4349822c53b9117e
   RealmSwift: a45861b21c180f5cf0f122144b9759fa8dde3e9e
   SDWebImage: 47e9b5b925cbce75946c23f0c42dd19464189af4
+  UICircularProgressRing: 3b472692ffca84060fd444ea5c0b387161067c54
 
-PODFILE CHECKSUM: 06ed2bfb317ef03a4b33b503176e4cd246c33022
+PODFILE CHECKSUM: f5b5aaa54c1dc6c79d9fd644b21f8e71bd9448e5
 
 COCOAPODS: 1.5.3

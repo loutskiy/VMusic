@@ -8,6 +8,8 @@
 
 import UIKit
 import LNPopupController
+import SDWebImage
+import MediaPlayer
 
 class MusicPlayerVC: UIViewController {
     
@@ -19,6 +21,9 @@ class MusicPlayerVC: UIViewController {
     @IBOutlet weak var fullPlayerPlayPauseButton: UIButton!
     @IBOutlet weak var currenTimeLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
+    @IBOutlet weak var shuffleButton: UIButton!
+    @IBOutlet weak var repeatButton: UIButton!
+    @IBOutlet weak var viewForVolume: UIView!
     
     let accessibilityDateComponentsFormatter = DateComponentsFormatter()
     
@@ -85,6 +90,12 @@ class MusicPlayerVC: UIViewController {
         songNameLabel.text = songTitle
         albumNameLabel.text = albumTitle
         albumArtImageView.image = albumArt
+        
+        changeButtonStyle(button: shuffleButton, state: AudioPlayer.defaultPlayer.isShuffleEnabled)
+        changeButtonStyle(button: repeatButton, state: AudioPlayer.defaultPlayer.isRepeatEnabled)
+        
+//        let volume = MPVolumeView(frame: CGRect(x: 0, y: 0, width: 300, height: 40))
+//        viewForVolume.addSubview(volume)
     }
 
     func updatePlayButton() {
@@ -152,7 +163,38 @@ class MusicPlayerVC: UIViewController {
         DispatchQueue.global(qos: .background).async {
             AudioPlayer.defaultPlayer.playAudio(fromURL: sourceURL)
         }
+        VMusic.shared.getTrackArtwork(artist:song.artist, track: song.title, success: {
+            path in
+            print("path")
+            print(path)
+            SDWebImageDownloader.shared().downloadImage(with: URL(string: path), options: [], progress: nil, completed: { (image, data, error, _) in
+                self.albumArt = image ?? #imageLiteral(resourceName: "AlbumPlaceholder")
+            })
+        })
         
+    }
+    
+    @IBAction func makeShuffleAction(_ sender: Any) {
+        AudioPlayer.defaultPlayer.isShuffleEnabled = !AudioPlayer.defaultPlayer.isShuffleEnabled
+        AudioPlayer.defaultPlayer.shuffle()
+        changeButtonStyle(button: shuffleButton, state: AudioPlayer.defaultPlayer.isShuffleEnabled)
+    }
+    
+    @IBAction func repeatAction(_ sender: Any) {
+        AudioPlayer.defaultPlayer.isRepeatEnabled = !AudioPlayer.defaultPlayer.isRepeatEnabled
+        changeButtonStyle(button: repeatButton, state: AudioPlayer.defaultPlayer.isRepeatEnabled)
+    }
+    
+    func changeButtonStyle ( button: UIButton, state: Bool) {
+        if state {
+            button.backgroundColor = .VMusicBlue
+            button.tintColor = .white
+            button.layer.cornerRadius = 5
+        } else {
+            button.backgroundColor = .clear
+            button.tintColor = .VMusicBlue
+            button.layer.cornerRadius = 0
+        }
     }
 }
 

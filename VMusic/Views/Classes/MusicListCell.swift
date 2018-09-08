@@ -26,11 +26,15 @@ class MusicListCell: UITableViewCell {
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var downloadButton: UIButton!
     @IBOutlet weak var widthConstraintDownloadButton: NSLayoutConstraint!
+    @IBOutlet weak var progressRing: UIActivityIndicatorView!
     
     var index = 0
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.iconView.layer.cornerRadius = 3
+        self.iconView.clipsToBounds = true
+        progressRing.isHidden = true
         // Initialization code
     }
 
@@ -41,6 +45,8 @@ class MusicListCell: UITableViewCell {
     }
     
     @IBAction func downloadButtonAction(_ sender: Any) {
+        progressRing.isHidden = false
+        downloadButton.isHidden = true
         delegate?.didPressDownloadButton(for: index)
     }
 }

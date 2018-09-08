@@ -34,7 +34,7 @@ class VMDatmusicModel : VMSongModel {
         duration <- map["duration"]
         date <- map["date"]
         genreId <- map["genre_id"]
-        url <- map["stream"]
+        url <- map["download"]
     }
     
 }

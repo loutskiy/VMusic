@@ -56,10 +56,20 @@
                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="gh8-dW-fzp">
+                        <rect key="frame" x="281" y="20" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="0az-EM-NFa"/>
+                            <constraint firstAttribute="height" constant="20" id="Yld-sD-7cW"/>
+                        </constraints>
+                        <color key="color" red="0.2901960784" green="0.46274509800000002" blue="0.6588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </activityIndicatorView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="qqN-vF-Uor" firstAttribute="top" secondItem="dBI-06-LdA" secondAttribute="bottom" constant="7" id="DiY-dg-aLG"/>
+                    <constraint firstItem="gh8-dW-fzp" firstAttribute="leading" secondItem="yg4-84-2fS" secondAttribute="trailing" constant="11" id="Dmb-qu-8pe"/>
                     <constraint firstItem="qqN-vF-Uor" firstAttribute="leading" secondItem="lNb-Tw-rgx" secondAttribute="trailing" constant="8" id="Jg5-SG-ZWE"/>
+                    <constraint firstItem="gh8-dW-fzp" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Lcx-GB-PZL"/>
                     <constraint firstItem="lNb-Tw-rgx" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="NLe-sv-Fk3"/>
                     <constraint firstItem="qqN-vF-Uor" firstAttribute="trailing" secondItem="dBI-06-LdA" secondAttribute="trailing" id="OWP-dM-i4S"/>
                     <constraint firstItem="7w3-RQ-ABH" firstAttribute="leading" secondItem="yg4-84-2fS" secondAttribute="trailing" constant="8" id="PyW-PN-Txo"/>
@@ -70,6 +80,7 @@
                     <constraint firstItem="qqN-vF-Uor" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="kpT-59-gYb"/>
                     <constraint firstItem="dBI-06-LdA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="lDh-OG-REq"/>
                     <constraint firstItem="lNb-Tw-rgx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="ri0-CN-EHX"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="gh8-dW-fzp" secondAttribute="trailing" constant="3" id="vCL-Vi-7jQ"/>
                     <constraint firstItem="7w3-RQ-ABH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="zMJ-jr-185"/>
                     <constraint firstItem="lNb-Tw-rgx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="zho-ES-tlw"/>
                 </constraints>
@@ -80,6 +91,7 @@
                 <outlet property="downloadButton" destination="7w3-RQ-ABH" id="7D3-AP-pi2"/>
                 <outlet property="durationLabel" destination="yg4-84-2fS" id="ydq-q8-mO4"/>
                 <outlet property="iconView" destination="lNb-Tw-rgx" id="2su-Y8-m5u"/>
+                <outlet property="progressRing" destination="gh8-dW-fzp" id="Dpy-Oy-jRw"/>
                 <outlet property="songTitleLabel" destination="dBI-06-LdA" id="w0Z-Eq-f7o"/>
                 <outlet property="widthConstraintDownloadButton" destination="56e-U6-x0T" id="83B-Ys-rYn"/>
             </connections>

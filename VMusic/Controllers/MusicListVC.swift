@@ -11,6 +11,10 @@ import ICSPullToRefresh
 import LNPopupController
 import MBProgressHUD
 
+struct Artwork {
+    var url: String
+}
+
 class MusicListVC: UITableViewController, UISearchBarDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -18,6 +22,8 @@ class MusicListVC: UITableViewController, UISearchBarDelegate {
     var data = [VMDatmusicModel]()
     var offset = 0
     var currentIndexPathRow = -1
+    
+    var cache = [IndexPath : Artwork]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,8 +92,48 @@ class MusicListVC: UITableViewController, UISearchBarDelegate {
         cell.authorTitleLabel.text = song.artist
         cell.durationLabel.text = song.duration.toAudioString
         cell.delegate = self
+        cell.iconView.image = #imageLiteral(resourceName: "AlbumPlaceholder")
+        downloadImageFor(artist: song.artist, track: song.title, indexPath: indexPath)
         
+//        VMusic.shared.getTrackArtwork(artist:song.artist, track: song.title, success: {
+//            path in
+//            print("path")
+//            print(path)
+//            DispatchQueue.main.async {
+//                let cell = tableView.cellForRow(at: indexPath) as! MusicListCell
+//                cell.iconView.sd_setImage(with: URL(string: path), placeholderImage: #imageLiteral(resourceName: "AlbumPlaceholder"), options: [], completed: nil)
+//            }
+//        })
+//
         return cell
+    }
+    
+    func downloadImageFor(artist: String, track: String, indexPath: IndexPath ) {
+        if let value = self.cache[indexPath] {
+            print("pathCache")
+            print(value.url)
+            print(indexPath)
+            print(self.tableView.indexPathsForVisibleRows)
+            if (self.tableView.indexPathsForVisibleRows?.contains(indexPath))! {
+                DispatchQueue.main.async {
+                    let cell = self.tableView.cellForRow(at: indexPath) as! MusicListCell
+                    cell.iconView.sd_setImage(with: URL(string: value.url), placeholderImage: #imageLiteral(resourceName: "AlbumPlaceholder"), options: [], completed: nil)
+                }
+            }
+        } else {
+        print(self.cache)
+            VMusic.shared.getTrackArtwork(artist:artist, track: track, success: {
+                path in
+                print("path")
+                print(path)
+                print(indexPath)
+                self.cache[indexPath] = Artwork(url: path)
+                if (self.tableView.indexPathsForVisibleRows?.contains(indexPath))! {
+                    let cell = self.tableView.cellForRow(at: indexPath) as! MusicListCell
+                    cell.iconView.sd_setImage(with: URL(string: path), placeholderImage: #imageLiteral(resourceName: "AlbumPlaceholder"), options: [], completed: nil)
+                }
+            })
+        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

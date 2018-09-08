@@ -10,12 +10,15 @@ import UIKit
 import ICSPullToRefresh
 import LNPopupController
 import MBProgressHUD
+import SDWebImage
 
 class MusicLibraryVC: UITableViewController, UISearchBarDelegate {
     
     var data = [VMSongModel]()
     var offset = 0
     var currentIndexPathRow = -1
+    var cache = [IndexPath : Artwork]()
+
     @IBOutlet weak var segmentControl: UISegmentedControl!
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -23,6 +26,8 @@ class MusicLibraryVC: UITableViewController, UISearchBarDelegate {
         super.viewDidLoad()
         self.loadData()
         self.searchBar.delegate = self
+        VMDownloadManager.shared.delegate = self
+        
         self.tableView.register(UINib(nibName: __kCV__MusicListCell, bundle: Bundle.main), forCellReuseIdentifier: __kCV__MusicListCell)
         
         tableView.addInfiniteScrollingWithHandler {
@@ -87,14 +92,56 @@ class MusicLibraryVC: UITableViewController, UISearchBarDelegate {
         cell.songTitleLabel.text = song.title
         cell.authorTitleLabel.text = song.artist
         cell.durationLabel.text = song.duration.toAudioString
-        song.localPath = VMCache.shared.getLocalPathForSong(id:song.id)
+        if segmentControl.selectedSegmentIndex == 0 {
+            try! realm.write {
+                song.localPath = VMCache.shared.getLocalPathForSong(id:song.id)
+            }
+        }
         if song.localPath == "" {
             cell.downloadButton.setImage(#imageLiteral(resourceName: "download"), for: .normal)
         } else {
             cell.downloadButton.setImage(#imageLiteral(resourceName: "garbage"), for: .normal)
         }
+        cell.iconView.image = #imageLiteral(resourceName: "AlbumPlaceholder")
+        downloadImageFor(artist: song.artist, track: song.title, indexPath: indexPath)
+        if VMDownloadManager.shared.getQueue().contains(song) {
+            cell.progressRing.isHidden = false
+//            cell.progressRing.startAnimating()
+            cell.downloadButton.isHidden = true
+        } else {
+            cell.progressRing.isHidden = true
+            cell.downloadButton.isHidden = false
+        }
 
         return cell
+    }
+    
+    func downloadImageFor(artist: String, track: String, indexPath: IndexPath ) {
+        if let value = self.cache[indexPath] {
+            print("pathCache")
+            print(value.url)
+            print(indexPath)
+            print(self.tableView.indexPathsForVisibleRows)
+            if (self.tableView.indexPathsForVisibleRows?.contains(indexPath))! {
+                DispatchQueue.main.async {
+                    let cell = self.tableView.cellForRow(at: indexPath) as! MusicListCell
+                    cell.iconView.sd_setImage(with: URL(string: value.url), placeholderImage: #imageLiteral(resourceName: "AlbumPlaceholder"), options: [], completed: nil)
+                }
+            }
+        } else {
+            print(self.cache)
+            VMusic.shared.getTrackArtwork(artist:artist, track: track, success: {
+                path in
+                print("path")
+                print(path)
+                print(indexPath)
+                self.cache[indexPath] = Artwork(url: path)
+                if (self.tableView.indexPathsForVisibleRows?.contains(indexPath))! {
+                    let cell = self.tableView.cellForRow(at: indexPath) as! MusicListCell
+                    cell.iconView.sd_setImage(with: URL(string: path), placeholderImage: #imageLiteral(resourceName: "AlbumPlaceholder"), options: [], completed: nil)
+                }
+            })
+        }
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -117,6 +164,15 @@ class MusicLibraryVC: UITableViewController, UISearchBarDelegate {
             player.songTitle = song.title
             player.albumTitle = song.artist
             player.popupItem.progress = 0;
+            
+            VMusic.shared.getTrackArtwork(artist:song.artist, track: song.title, success: {
+                path in
+                print("path")
+                print(path)
+                SDWebImageDownloader.shared().downloadImage(with: URL(string: path), options: [], progress: nil, completed: { (image, data, error, _) in
+                    player.albumArt = image!
+                })
+            })
 
             tabBarController?.presentPopupBar(withContentViewController: player, animated: true, completion: nil)
             tabBarController?.popupBar.tintColor = .VMusicBlue
@@ -170,7 +226,17 @@ extension MusicLibraryVC: MusicListCellDelegate {
             downloadManager.downloadSong(song)
         } else {
             VMCache.shared.deleteSong(song)
+            self.tableView.reloadData()
         }
+//        tableView.reloadData()
+    }
+}
+
+extension MusicLibraryVC: VMDownloadManagerDelegate {
+    
+    func didFinishDownloadingSong (_ song : VMSongModel, path : String) {
+        print("reloadTableData")
         tableView.reloadData()
     }
+
 }

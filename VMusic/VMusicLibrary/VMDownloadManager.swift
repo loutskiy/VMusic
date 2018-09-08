@@ -43,6 +43,10 @@ class VMDownloadManager {
         }
     }
     
+    func getQueue () -> [VMSongModel] {
+        return queue
+    }
+    
     func downloadSong (_ song : VMSongModel ) {
         if !queue.contains(song) {
             queue.append(song)
